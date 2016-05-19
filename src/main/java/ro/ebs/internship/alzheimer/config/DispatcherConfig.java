@@ -11,8 +11,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = { "ro.ebs.internship.alzheimer.controller" })
-public class DispatcherConfig extends WebMvcConfigurerAdapter{
+@ComponentScan(basePackages = {"ro.ebs.internship.alzheimer.controller"})
+public class DispatcherConfig extends WebMvcConfigurerAdapter {
 
 
     @Override
