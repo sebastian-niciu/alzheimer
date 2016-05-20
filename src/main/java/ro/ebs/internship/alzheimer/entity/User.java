@@ -5,7 +5,7 @@ public class User {
     public enum Type {
         PACIENT,
         CARETAKER
-    };
+    }
 
     private String username;
     private String password;
@@ -71,5 +71,16 @@ public class User {
         this.sex = sex;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", myType=" + myType +
+                ", age=" + age +
+                ", sex=" + sex +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }
