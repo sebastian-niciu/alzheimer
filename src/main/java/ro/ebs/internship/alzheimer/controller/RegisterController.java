@@ -16,5 +16,5 @@ public class RegisterController {
     @ResponseStatus(HttpStatus.CREATED)
     public void registerUser(@RequestBody User user) {
         System.out.println(user);
-    }
+    };
 }
