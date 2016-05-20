@@ -10,7 +10,7 @@
 <head>
     <title>Hello,I am ${name}</title>
 </head>
-<body>
+<body bgcolor="#E6E6FA">
 
 </body>
 </html>
