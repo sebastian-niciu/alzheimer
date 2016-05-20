@@ -3,7 +3,7 @@ package ro.ebs.internship.alzheimer.entity;
 public class User {
 
     public enum Type {
-        PACIENT,
+        PATIENT,
         CARETAKER
     }
 
