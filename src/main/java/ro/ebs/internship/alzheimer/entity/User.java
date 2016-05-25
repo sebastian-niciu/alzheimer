@@ -1,5 +1,16 @@
 package ro.ebs.internship.alzheimer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "T_USER")
 public class User {
 
     public enum Type {
@@ -7,6 +18,7 @@ public class User {
         CARETAKER
     }
 
+    @Id
     private String username;
     private String password;
     private String name;
