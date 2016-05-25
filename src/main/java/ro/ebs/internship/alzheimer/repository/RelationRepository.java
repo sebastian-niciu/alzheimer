@@ -7,4 +7,5 @@ import ro.ebs.internship.alzheimer.entity.Relation;
 @Repository
 public interface RelationRepository extends CrudRepository<Relation, Long> {
 
+    
 }
