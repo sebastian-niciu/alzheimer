@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ro.ebs.internship.alzheimer.entity.Coord;
 import ro.ebs.internship.alzheimer.repository.CoordsRepository;
+import java.util.*;
 
 import java.util.Collections;
 import java.util.List;
