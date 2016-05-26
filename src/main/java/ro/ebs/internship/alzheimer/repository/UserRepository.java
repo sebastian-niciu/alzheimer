@@ -7,5 +7,4 @@ import ro.ebs.internship.alzheimer.entity.User;
 @Repository
 public interface UserRepository  extends CrudRepository<User, String> {
 
-
 }
