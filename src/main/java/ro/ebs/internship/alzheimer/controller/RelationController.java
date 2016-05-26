@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import ro.ebs.internship.alzheimer.entity.Relation;
 import ro.ebs.internship.alzheimer.repository.RelationRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @RestController
 public class RelationController {
 
@@ -24,4 +29,19 @@ public class RelationController {
         repository.save(relation);
         System.out.println(relation);
     }
+
+    @RequestMapping(
+            value = "/relations",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    public List<Relation> getRelations(){
+        List<Relation> relations = new ArrayList<Relation>();
+        for(Relation relation : repository.findAll()) {
+            relations.add(relation);
+        }
+        return relations;
+    }
+
 }
