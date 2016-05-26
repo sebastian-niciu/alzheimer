@@ -1,6 +1,16 @@
 package ro.ebs.internship.alzheimer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
+@Entity
 public class Coord {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
+    private Long id;
 
     private String latitude;
     private String longitude;
