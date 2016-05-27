@@ -5,16 +5,42 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-public class Coord {
+public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    private Patient patient;
+
+    @Column
     private String latitude;
+
+    @Column
     private String longitude;
+
+    @Column
     private Long timestamp;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
 
     public String getLatitude() {
         return latitude;
@@ -37,13 +63,14 @@ public class Coord {
     }
 
     public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
-    }
+        this.timestamp = timestamp;}
 
     @Override
     public String toString() {
-        return "Coord{" +
-                "latitude='" + latitude + '\'' +
+        return "Location{" +
+                "id=" + id +
+                ", patient=" + patient +
+                ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
                 ", timestamp=" + timestamp +
                 '}';

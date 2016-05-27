@@ -1,47 +1,47 @@
 package ro.ebs.internship.alzheimer.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import ro.ebs.internship.alzheimer.entity.Relation;
-import ro.ebs.internship.alzheimer.repository.RelationRepository;
+import ro.ebs.internship.alzheimer.entity.Caretaker;
+import ro.ebs.internship.alzheimer.entity.Patient;
+import ro.ebs.internship.alzheimer.repository.CaretakerRepository;
+import ro.ebs.internship.alzheimer.repository.PatientRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 public class RelationController {
 
     @Autowired
-    private RelationRepository repository;
+    private CaretakerRepository caretakerRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
 
     @RequestMapping(
-            value = "/relations",
-            method = RequestMethod.PUT,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            value = "/caretakers/{caretaker}/patients/{patient}",
+            method = RequestMethod.PUT
     )
     @ResponseStatus(HttpStatus.CREATED)
-    public void createRelation(@RequestBody Relation relation) {
-        repository.save(relation);
-        System.out.println(relation);
+    @Transactional
+    public void createRelation(@PathVariable("caretaker") String caretakerUsername,
+                               @PathVariable("patient") String patientUsername) {
+        Caretaker caretaker = caretakerRepository.findByUsername(caretakerUsername);
+        Patient patient = patientRepository.findByUsername(patientUsername);
+        caretaker.getPatients().add(patient);
     }
 
     @RequestMapping(
-            value = "/relations",
+            value = "/caretakers/{caretaker}/patients",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseStatus(HttpStatus.OK)
-    public List<Relation> getRelations(){
-        List<Relation> relations = new ArrayList<Relation>();
-        for(Relation relation : repository.findAll()) {
-            relations.add(relation);
-        }
-        return relations;
+    public List<String> getPatientsForCaretaker(@PathVariable("caretaker") String caretakerUsername){
+        return patientRepository.findPatientUserNamesByCaretaker(caretakerUsername);
     }
 
 }

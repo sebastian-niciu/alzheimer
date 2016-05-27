@@ -5,13 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * Created by Richard on 5/13/2016.
- */
 @Controller
 public class MonitoringController {
-    @RequestMapping(value = "hello", method = RequestMethod.GET)
+
+    @RequestMapping(value = "monitoring/ping", method = RequestMethod.GET)
     public ModelAndView getHello() {
         return new ModelAndView("hello", "name", "Spring");
     }
+
 }

@@ -2,96 +2,99 @@ package ro.ebs.internship.alzheimer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-
-@Entity
-@Table(name = "T_USER")
-public class User {
-
-    public enum Type {
-        PATIENT,
-        CARETAKER
-    }
+@MappedSuperclass
+public abstract class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
+    private Long id;
+
+    @Column(unique = true)
     private String username;
+
+    @Column
     private String password;
+
+    @Column
     private String name;
-    private Type myType;
-    private long age;
-    private char sex;
+
+    @Column
+    private Long age;
+
+    @Column
+    private String sex;
+
+    @Column
     private String address;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public char getSex() {
-        return sex;
-    }
-
-    public long getAge() {
-        return age;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Type getMyType() {
-        return myType;
-    }
-
-    public void setMyType(Type myType) {
-        this.myType = myType;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setAge(long age) {
-        this.age = age;
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getName() {
+        return name;
     }
 
-    public void setSex(char sex) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getAge() {
+        return age;
+    }
+
+    public void setAge(Long age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
-                ", myType=" + myType +
                 ", age=" + age +
-                ", sex=" + sex +
+                ", sex='" + sex + '\'' +
                 ", address='" + address + '\'' +
                 '}';
     }
