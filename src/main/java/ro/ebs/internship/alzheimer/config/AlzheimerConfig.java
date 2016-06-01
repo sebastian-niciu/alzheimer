@@ -12,6 +12,7 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -19,8 +20,9 @@ import java.util.Properties;
 
 
 @Configuration
-@ComponentScan(basePackages = {"ro.ebs.internship.alzheimer.repository"})
-@EnableJpaRepositories(basePackages = {"ro.ebs.internship.alzheimer.repository"})
+@ComponentScan(basePackages = {"ro.ebs.internship.alzheimer.repository", "ro.ebs.internship.alzheimer.service"})
+@EnableJpaRepositories(basePackages = {"ro.ebs.internship.alzheimer.repository"}, enableDefaultTransactions = false)
+@EnableTransactionManagement
 public class AlzheimerConfig {
 
     @Bean(name = "messageSource")
@@ -44,17 +46,17 @@ public class AlzheimerConfig {
     }
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
         dataSource.setUrl("jdbc:h2:file:~/alzheimer_db");
-        dataSource.setUsername( "sa" );
-        dataSource.setPassword( "sa" );
+        dataSource.setUsername("sa");
+        dataSource.setPassword("sa");
         return dataSource;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
 
@@ -62,15 +64,15 @@ public class AlzheimerConfig {
     }
 
     @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
     private Properties getProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect","org.hibernate.dialect.H2Dialect");
-        properties.setProperty("hibernate.hbm2ddl.auto","create-drop");
-        return  properties;
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        return properties;
     }
 
 }

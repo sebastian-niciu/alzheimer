@@ -2,11 +2,13 @@ package ro.ebs.internship.alzheimer.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ro.ebs.internship.alzheimer.entity.Location;
 import ro.ebs.internship.alzheimer.entity.Patient;
 import ro.ebs.internship.alzheimer.repository.LocationRepository;
 import ro.ebs.internship.alzheimer.repository.PatientRepository;
+import ro.ebs.internship.alzheimer.service.LocationService;
 
 import java.util.List;
 
@@ -15,10 +17,7 @@ import java.util.List;
 public class LocationController {
 
     @Autowired
-    private LocationRepository locationRepository;
-
-    @Autowired
-    private PatientRepository patientRepository;
+    private LocationService locationService;
 
     @RequestMapping(
             value = "patients/{patient}",
@@ -26,9 +25,7 @@ public class LocationController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public void storeLocation(@PathVariable("patient") String patientUsername, @RequestBody Location location){
-        Patient patient = patientRepository.findByUsername(patientUsername);
-        location.setPatient(patient);
-        locationRepository.save(location);
+        locationService.saveLocation(location, patientUsername);
     }
 
     @RequestMapping(
@@ -37,7 +34,7 @@ public class LocationController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<Location> getLocations(@PathVariable("patient") String patient){
-        return locationRepository.findByPatientUsername(patient);
+        return locationService.getLocationsFromService(patient);
     }
 
 }

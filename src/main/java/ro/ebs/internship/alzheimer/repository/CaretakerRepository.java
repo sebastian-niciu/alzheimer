@@ -6,5 +6,6 @@ import ro.ebs.internship.alzheimer.entity.Caretaker;
 
 @Repository
 public interface CaretakerRepository extends CrudRepository<Caretaker, Long> {
+
     Caretaker findByUsername(String username);
 }
