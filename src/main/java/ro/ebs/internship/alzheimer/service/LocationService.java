@@ -8,6 +8,7 @@ import ro.ebs.internship.alzheimer.entity.Patient;
 import ro.ebs.internship.alzheimer.repository.LocationRepository;
 import ro.ebs.internship.alzheimer.repository.PatientRepository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
