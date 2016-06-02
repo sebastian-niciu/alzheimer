@@ -69,4 +69,14 @@ public class LocationController {
         }
     }
 
+    @RequestMapping(
+            value = "caretakers/{caretaker}/patients/{patient}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Location> getAllLocationsForPatient(@PathVariable("patient") String patient,
+                                                    @PathVariable("caretaker") String caretaker) {
+        return locationService.getAllLocationsForPatient(patient, caretaker);
+    }
+
 }

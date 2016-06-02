@@ -1,6 +1,7 @@
 package ro.ebs.internship.alzheimer.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.ebs.internship.alzheimer.entity.Caretaker;
@@ -55,5 +56,9 @@ public class LocationService {
             lastLocationForPatients.put(patient.getUsername(), patient.getLocations().get(patient.getLocations().size()-1));
         }
         return lastLocationForPatients;
+    }
+
+    public List<Location> getAllLocationsForPatient(String patientUsername, String caretakerUsername) {
+        return locationRepository.findByPatientAndCaretakerUsername(patientUsername, caretakerUsername);
     }
 }
