@@ -30,4 +30,5 @@ public class LocationService {
     public List<Location> getLocationsFromService(String patient) {
         return locationRepository.findByPatientUsername(patient);
     }
+
 }

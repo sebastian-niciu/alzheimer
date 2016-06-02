@@ -8,6 +8,7 @@ import ro.ebs.internship.alzheimer.entity.Caretaker;
 import ro.ebs.internship.alzheimer.entity.Patient;
 import ro.ebs.internship.alzheimer.repository.CaretakerRepository;
 import ro.ebs.internship.alzheimer.repository.PatientRepository;
+import ro.ebs.internship.alzheimer.service.CaretakerService;
 import ro.ebs.internship.alzheimer.service.PatientService;
 
 @RestController
@@ -17,7 +18,7 @@ public class RegisterController {
     private PatientService patientService;
 
     @Autowired
-    private CaretakerRepository caretakerRepository;
+    private CaretakerService caretakerService;
 
     @RequestMapping(
             value = "caretakers",
@@ -26,7 +27,8 @@ public class RegisterController {
     )
     @ResponseStatus(HttpStatus.CREATED)
     public void registerCaretaker(@RequestBody Caretaker caretaker) {
-        caretakerRepository.save(caretaker);
+
+        caretakerService.registerCaretaker(caretaker);
     }
 
     @RequestMapping(
@@ -36,6 +38,9 @@ public class RegisterController {
     )
     @ResponseStatus(HttpStatus.CREATED)
     public void registerPatient(@RequestBody Patient patient) {
+
         patientService.registerPatient(patient);
     }
+
+
 }

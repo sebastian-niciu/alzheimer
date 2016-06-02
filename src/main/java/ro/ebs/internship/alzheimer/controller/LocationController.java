@@ -11,6 +11,7 @@ import ro.ebs.internship.alzheimer.repository.PatientRepository;
 import ro.ebs.internship.alzheimer.service.LocationService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("locations")
@@ -36,5 +37,14 @@ public class LocationController {
     public List<Location> getLocations(@PathVariable("patient") String patient){
         return locationService.getLocationsFromService(patient);
     }
+
+    /*@RequestMapping(
+            value = "caretakers/{caretaker}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Location> getCaretaker(@PathVariable("caretaker") String caretaker){
+        return locationService.getAllLocationsFromService(patient);
+    }*/
 
 }
