@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import ro.ebs.internship.alzheimer.service.CaretakerService;
+import ro.ebs.internship.alzheimer.service.PatientService;
 import ro.ebs.internship.alzheimer.service.RelationService;
 
 import java.util.List;
@@ -13,6 +15,12 @@ public class RelationController {
 
     @Autowired
     private RelationService relationService;
+
+    @Autowired
+    private CaretakerService caretakerService;
+
+    @Autowired
+    private PatientService patientService;
 
     @RequestMapping(
             value = "/patients/{patient}/caretakers/{caretaker}",
@@ -41,7 +49,7 @@ public class RelationController {
     )
     @ResponseStatus(HttpStatus.OK)
     public List<String> getPatientsForCaretaker(@PathVariable("caretaker") String caretakerUsername) {
-        return relationService.getPatientsForCaretaker(caretakerUsername);
+        return patientService.getPatientsForCaretaker(caretakerUsername);
     }
 
     @RequestMapping(
@@ -51,7 +59,7 @@ public class RelationController {
     )
     @ResponseStatus(HttpStatus.OK)
     public List<String> getCaretakersForPatient(@PathVariable("patient") String patientUsername) {
-        return relationService.getCaretakersForPatient(patientUsername);
+        return caretakerService.getCaretakersForPatient(patientUsername);
     }
 
     @RequestMapping(
@@ -61,7 +69,7 @@ public class RelationController {
     @ResponseStatus(HttpStatus.OK)
     public void removePatientFromCaretaker(@PathVariable("caretaker") String caretakerUsername,
                                            @PathVariable("patient") String patientUsername) {
-        relationService.removePatientFromCaretaker(caretakerUsername, patientUsername);
+        caretakerService.removePatientFromCaretaker(caretakerUsername, patientUsername);
     }
 
     @RequestMapping(
@@ -71,6 +79,6 @@ public class RelationController {
     @ResponseStatus(HttpStatus.OK)
     public void removeCaretakerFromPatient(@PathVariable("patient") String patientUsername,
                                            @PathVariable("caretaker") String caretakerUsername) {
-        relationService.removePatientFromCaretaker(caretakerUsername, patientUsername);
+        patientService.removeCaretakerFromPatient(patientUsername, caretakerUsername);
     }
 }

@@ -8,9 +8,6 @@ import ro.ebs.internship.alzheimer.entity.Patient;
 import ro.ebs.internship.alzheimer.repository.CaretakerRepository;
 import ro.ebs.internship.alzheimer.repository.PatientRepository;
 
-import java.util.Iterator;
-import java.util.List;
-
 @Service
 public class RelationService {
 
@@ -27,27 +24,4 @@ public class RelationService {
         caretaker.getPatients().add(patient);
     }
 
-    @Transactional
-    public List<String> getPatientsForCaretaker(String caretakerUsername) {
-        return patientRepository.findPatientUserNamesByCaretaker(caretakerUsername);
-    }
-
-    @Transactional
-    public List<String> getCaretakersForPatient(String patientUsername) {
-        return caretakerRepository.findCaretakerUserNamesByPatientUsername(patientUsername);
-    }
-
-    @Transactional
-    public void removePatientFromCaretaker(String caretakerUsername, String patientUsername) {
-        Caretaker caretaker = caretakerRepository.findByUsername(caretakerUsername);
-
-        Iterator<Patient> patientIterator = caretaker.getPatients().iterator();
-        while (patientIterator.hasNext()) {
-            Patient patient = patientIterator.next();
-            if (patient.getUsername().equals(patientUsername)) {
-                patientIterator.remove();
-                break;
-            }
-        }
-    }
 }
