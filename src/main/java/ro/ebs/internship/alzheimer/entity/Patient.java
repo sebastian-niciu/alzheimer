@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "T_PATIENT")
 public class Patient extends User {
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Caretaker> caretakers;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")

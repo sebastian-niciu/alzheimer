@@ -1,4 +1,5 @@
 package ro.ebs.internship.alzheimer.controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +26,7 @@ public class LocationController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public void storeLocation(@PathVariable("patient") String patientUsername, @RequestBody Location location){
+    public void storeLocation(@PathVariable("patient") String patientUsername, @RequestBody Location location) {
         locationService.saveLocation(location, patientUsername);
     }
 
@@ -34,17 +35,38 @@ public class LocationController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<Location> getLocations(@PathVariable("patient") String patient){
+    public List<Location> getLocations(@PathVariable("patient") String patient) {
         return locationService.getLocationsFromService(patient);
     }
 
-    /*@RequestMapping(
+    @RequestMapping(
             value = "caretakers/{caretaker}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<Location> getCaretaker(@PathVariable("caretaker") String caretaker){
-        return locationService.getAllLocationsFromService(patient);
-    }*/
+    public Map<String, List<Location>> getPatientsAllLocationsForCaretaker(@PathVariable("caretaker") String caretaker,
+                                                                           @RequestParam("type") String type) {
+        switch (type) {
+            case "ALL":
+                return locationService.getAllLocationsFromService(caretaker);
+            default:
+                throw new RuntimeException("Type not supported");
+        }
+    }
+
+    @RequestMapping(
+            value = "caretakers/{caretaker}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, Location> getPatientsLastLocationsForCaretaker(@PathVariable("caretaker") String caretaker,
+                                                                      @RequestParam("type") String type) {
+        switch (type) {
+            case "LAST":
+                return locationService.getLastLocationFromService(caretaker);
+            default:
+                throw new RuntimeException("Type not supported");
+        }
+    }
 
 }
