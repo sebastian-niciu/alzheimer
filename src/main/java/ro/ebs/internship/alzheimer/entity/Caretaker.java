@@ -1,15 +1,13 @@
 package ro.ebs.internship.alzheimer.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "T_CARETAKER")
 public class Caretaker extends User {
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "caretakers", cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Patient> patients;
 
     public Set<Patient> getPatients() {

@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 public interface PatientRepository extends CrudRepository<Patient, Long> {
 
-    Patient findByUsername(String username);
+    @Query("SELECT p from Patient p where p.username = :username")
+    Patient findByUsername(@Param("username") String username);
 
     @Query("Select p.username from Patient p join p.caretakers c where c.username = :username")
     List<String> findPatientUserNamesByCaretaker(@Param("username") String username);

@@ -69,7 +69,7 @@ public class RelationController {
     @ResponseStatus(HttpStatus.OK)
     public void removePatientFromCaretaker(@PathVariable("caretaker") String caretakerUsername,
                                            @PathVariable("patient") String patientUsername) {
-        caretakerService.removePatientFromCaretaker(caretakerUsername, patientUsername);
+        relationService.removeRelation(caretakerUsername, patientUsername);
     }
 
     @RequestMapping(
@@ -79,6 +79,6 @@ public class RelationController {
     @ResponseStatus(HttpStatus.OK)
     public void removeCaretakerFromPatient(@PathVariable("patient") String patientUsername,
                                            @PathVariable("caretaker") String caretakerUsername) {
-        patientService.removeCaretakerFromPatient(patientUsername, caretakerUsername);
+        relationService.removeRelation(caretakerUsername, patientUsername);
     }
 }

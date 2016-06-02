@@ -1,9 +1,6 @@
 package ro.ebs.internship.alzheimer.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
@@ -11,10 +8,10 @@ import java.util.Set;
 @Table(name = "T_PATIENT")
 public class Patient extends User {
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Caretaker> caretakers;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")
     private List<Location> locations;
 
     public Set<Caretaker> getCaretakers() {

@@ -12,7 +12,7 @@ public class Location {
     @JsonIgnore
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private Patient patient;
 
