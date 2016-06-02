@@ -27,7 +27,6 @@ public class RegisterController {
     )
     @ResponseStatus(HttpStatus.CREATED)
     public void registerCaretaker(@RequestBody Caretaker caretaker) {
-
         caretakerService.registerCaretaker(caretaker);
     }
 
@@ -38,7 +37,6 @@ public class RegisterController {
     )
     @ResponseStatus(HttpStatus.CREATED)
     public void registerPatient(@RequestBody Patient patient) {
-
         patientService.registerPatient(patient);
     }
 

@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ro.ebs.internship.alzheimer.entity.Caretaker;
-import ro.ebs.internship.alzheimer.entity.Patient;
 import ro.ebs.internship.alzheimer.repository.CaretakerRepository;
+
+import java.util.List;
 
 @Service
 public class CaretakerService {
@@ -18,8 +19,8 @@ public class CaretakerService {
         caretakerRepository.save(caretaker);
     }
 
-    /*@Transactional
-    public List<Caretaker> getCaretakersFromService(String caretaker) {
-        return caretakerRepository.findByCaretakerUsername(caretaker);
-    }*/
+    @Transactional
+    public List<String> getCaretakersForPatient(String caretaker) {
+        return caretakerRepository.findCaretakerUserNamesByPatientUsername(caretaker);
+    }
 }
