@@ -13,5 +13,4 @@ public interface LocationRepository extends CrudRepository<Location, Long> {
 
     @Query("SELECT l FROM Location l where l.patient.username = :username")
     List<Location> findByPatientUsername(@Param("username") String patient);
-
 }

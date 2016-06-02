@@ -63,7 +63,7 @@ public class RelationController {
         while (caretakerIterator.hasNext()) {
             Caretaker caretaker = caretakerIterator.next();
             if (caretaker.getUsername().equals(caretakerUsername))
-            caretakerIterator.remove();
+                caretakerIterator.remove();
             break;
         }
     }
@@ -88,5 +88,4 @@ public class RelationController {
     public List<String> getCaretakerForCaretaker(@PathVariable("patient") String patientUsername) {
         return caretakerRepository.findCaretakerUserNamesByPatientUsername(patientUsername);
     }
-
 }

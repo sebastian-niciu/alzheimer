@@ -16,5 +16,4 @@ public interface CaretakerRepository extends CrudRepository<Caretaker, Long> {
     @Query("SELECT c.username from Caretaker c join c.patients p where p.username = :username")
     List<String> findCaretakerUserNamesByPatientUsername(@Param("username") String username);
 
-
 }
