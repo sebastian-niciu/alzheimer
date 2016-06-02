@@ -10,6 +10,7 @@ import ro.ebs.internship.alzheimer.entity.Patient;
 import ro.ebs.internship.alzheimer.repository.CaretakerRepository;
 import ro.ebs.internship.alzheimer.repository.PatientRepository;
 
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -35,13 +36,57 @@ public class RelationController {
     }
 
     @RequestMapping(
+            value = "patients/{patient}/caretakers/{caretaker}",
+            method = RequestMethod.PUT
+    )
+    @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
+    public void createARelation(@PathVariable("patient") String patientUsername,
+                                @PathVariable("caretaker") String caretakerUsername) {
+        Patient patient = patientRepository.findByUsername(patientUsername);
+        Caretaker caretaker = caretakerRepository.findByUsername(caretakerUsername);
+        patient.getCaretakers().add(caretaker);
+    }
+
+    @RequestMapping(
+            value = "patients/{patient}/caretakers/{caretaker}",
+            method = RequestMethod.DELETE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    public void removeCaretakerFromPatient(@PathVariable("patient") String patientUsername,
+                                           @PathVariable("caretaker") String caretakerUsername) {
+        Patient patient = patientRepository.findByUsername(patientUsername);
+
+        Iterator<Caretaker> caretakerIterator = patient.getCaretakers().iterator();
+
+        while (caretakerIterator.hasNext()) {
+            Caretaker caretaker = caretakerIterator.next();
+            if (caretaker.getUsername().equals(caretakerUsername))
+            caretakerIterator.remove();
+            break;
+        }
+    }
+
+
+    @RequestMapping(
             value = "/caretakers/{caretaker}/patients",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ResponseStatus(HttpStatus.OK)
-    public List<String> getPatientsForCaretaker(@PathVariable("caretaker") String caretakerUsername){
+    public List<String> getPatientsForCaretaker(@PathVariable("caretaker") String caretakerUsername) {
         return patientRepository.findPatientUserNamesByCaretaker(caretakerUsername);
+    }
+
+    @RequestMapping(
+            value = "/patient/{patient}/caretakers",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getCaretakerForCaretaker(@PathVariable("patient") String patientUsername) {
+        return caretakerRepository.findCaretakerUserNamesByPatientUsername(patientUsername);
     }
 
 }
