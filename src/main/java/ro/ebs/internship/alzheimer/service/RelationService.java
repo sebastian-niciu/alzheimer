@@ -28,17 +28,18 @@ public class RelationService {
     }
 
     @Transactional
-    public void removeRelation(String patientUsername, String caretakerUsername) {
+    public void removeRelation(String caretakerUsername, String patientUsername) {
         Patient patient = patientRepository.findByUsername(patientUsername);
-        Iterator<Caretaker> caretakerIterator = patient.getCaretakers().iterator();
-        while (caretakerIterator.hasNext()) {
-            Caretaker caretaker = caretakerIterator.next();
-            if (caretaker.getUsername().equals(caretakerUsername)) {
-                caretakerIterator.remove();
-                break;
-            }
+        Caretaker caretaker = caretakerRepository.findByUsername(caretakerUsername);
+
+        if (patient != null && patient.getCaretakers() != null) {
+            patient.getCaretakers().remove(caretaker);
         }
-        patientRepository.save(patient);
+        if (caretaker != null && caretaker.getPatients() != null) {
+            caretaker.getPatients().remove(patient);
+        }
+
+        caretakerRepository.save(caretaker);
     }
 
 }
