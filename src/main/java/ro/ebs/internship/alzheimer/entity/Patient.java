@@ -12,6 +12,7 @@ public class Patient extends User {
     private Set<Caretaker> caretakers;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient")
+    @OrderBy("timestamp DESC")
     private List<Location> locations;
 
     public Set<Caretaker> getCaretakers() {

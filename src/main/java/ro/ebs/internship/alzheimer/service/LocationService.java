@@ -11,6 +11,7 @@ import ro.ebs.internship.alzheimer.repository.CaretakerRepository;
 import ro.ebs.internship.alzheimer.repository.LocationRepository;
 import ro.ebs.internship.alzheimer.repository.PatientRepository;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -49,11 +50,14 @@ public class LocationService {
         return locationsForPatients;
     }
 
-    public Map<String, Location> getLastLocationFromService(String caretakerUsername) {
-        Map<String, Location> lastLocationForPatients = new HashMap<String, Location>();
+    @Transactional
+    public Map<String, List<Location>> getLastLocationFromService(String caretakerUsername) {
+        Map<String, List<Location>> lastLocationForPatients = new HashMap<>();
         Caretaker caretaker = caretakerRepository.findByUsername(caretakerUsername);
-        for (Patient patient : caretaker.getPatients()){
-            lastLocationForPatients.put(patient.getUsername(), patient.getLocations().get(patient.getLocations().size()-1));
+        for (Patient patient : caretaker.getPatients()) {
+            String patientUsername = patient.getUsername();
+            List<Location> lastLocation = getLastLocationAsList(patient);
+            lastLocationForPatients.put(patientUsername, lastLocation);
         }
         return lastLocationForPatients;
     }
@@ -61,4 +65,14 @@ public class LocationService {
     public List<Location> getAllLocationsForPatient(String patientUsername, String caretakerUsername) {
         return locationRepository.findByPatientAndCaretakerUsername(patientUsername, caretakerUsername);
     }
+
+    private List<Location> getLastLocationAsList(Patient patient) {
+        List<Location> locations = patient.getLocations();
+        List<Location> lastLocation = Collections.emptyList();
+        if(locations != null && locations.size() > 0) {
+            lastLocation = Collections.singletonList(locations.get(0));
+        }
+        return lastLocation;
+    }
+
 }

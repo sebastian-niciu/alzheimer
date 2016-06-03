@@ -40,7 +40,7 @@ public class LocationController {
     }
 
     @RequestMapping(
-            value = "caretakers/{caretaker}",
+            value = "caretakers/{caretaker}/patients",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -49,19 +49,6 @@ public class LocationController {
         switch (type) {
             case "ALL":
                 return locationService.getAllLocationsFromService(caretaker);
-            default:
-                throw new RuntimeException("Type not supported");
-        }
-    }
-
-    @RequestMapping(
-            value = "caretakers/{caretaker}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public Map<String, Location> getPatientsLastLocationsForCaretaker(@PathVariable("caretaker") String caretaker,
-                                                                      @RequestParam("type") String type) {
-        switch (type) {
             case "LAST":
                 return locationService.getLastLocationFromService(caretaker);
             default:
